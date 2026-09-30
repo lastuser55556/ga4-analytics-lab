@@ -1,27 +1,36 @@
 'use strict';
 
-const endpoint = 'https://script.google.com/macros/s/AKfycbyBvmHTpcOJF1e-l24aTBJGwqelAKpd4Nw11w8qwpcZpGymYuEKiQqDt6Km712ODmnT/exec';
+const endpoint = 'https://script.google.com/macros/s/AKfycbxePC6uSncytGPxByBF0vixhEXCt1-EtbCFUqLIVkXXTGRue8F2NFjiIe_q434S9aOx/exec';
 const form = document.querySelector('#lead-form');
+
 if (form) {
+  const status = document.querySelector('#form-status');
   const params = new URLSearchParams(window.location.search);
-  ['utm_source', 'utm_medium', 'utm_campaign'].forEach((name) => {
-    form.elements[name].value = params.get(name) || 'not_set';
-  });
-  form.elements.request_id.value = crypto.randomUUID();
+  const defaults = { utm_source: 'direct', utm_medium: 'none', utm_campaign: 'not_set' };
+
+  for (const [name, fallback] of Object.entries(defaults)) {
+    form.elements[name].value = params.get(name)?.trim() || fallback;
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const status = document.querySelector('#form-status');
     if (!form.reportValidity()) return;
-    if (endpoint.startsWith('PASTE_')) {
-      status.textContent = 'Обработчик заявок публикуется. Повторите отправку через минуту.';
-      return;
-    }
+
+    const requestId = form.elements.request_id;
+    if (!requestId.value) requestId.value = 'REQ-' + crypto.randomUUID().toUpperCase();
+
+    status.textContent = 'Отправляем заявку…';
     try {
       await fetch(endpoint, { method: 'POST', body: new FormData(form), mode: 'no-cors' });
-      if (typeof gtag === 'function') gtag('event', 'generate_lead', { lead_source: 'google_sheets_form' });
-      status.textContent = 'Готово! Заявка отправлена в учебную таблицу.';
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { lead_source: 'contact_form' });
+      }
+      status.textContent = 'Заявка отправлена. Номер: ' + requestId.value;
       form.reset();
-      form.elements.request_id.value = crypto.randomUUID();
+      requestId.value = '';
+      for (const [name, fallback] of Object.entries(defaults)) {
+        form.elements[name].value = params.get(name)?.trim() || fallback;
+      }
     } catch (error) {
       status.textContent = 'Не удалось отправить заявку. Проверьте подключение к сети.';
     }
