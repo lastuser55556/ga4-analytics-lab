@@ -4,11 +4,11 @@
 
 ## Начало работы
 
-1. Нажмите **Use this template → Create a new repository**, создайте собственную копию.
-2. В VS Code выберите **Clone Repository**, клонируйте свою копию и откройте папку.
+1. Создайте собственную копию шаблона через **Use this template → Create a new repository**.
+2. В VS Code выберите **Clone Repository**, затем откройте папку проекта.
 3. Для локального просмотра используйте Live Server в VS Code.
-4. В Vercel импортируйте свой репозиторий. Framework Preset: **Other**, Root Directory: корень; Build Command: пусто (при необходимости Override), Output Directory: **.**.
-5. После Deploy откройте постоянный Production URL.
+4. Публикация выполняется через GitHub Pages: после Push в ветку `main` workflow автоматически размещает статический сайт.
+5. Откройте постоянный URL: `https://lastuser55556.github.io/ga4-analytics-lab/`.
 
 ## Структура
 
@@ -16,31 +16,26 @@
 index.html
 about.html
 contacts.html
+guide.html
 css/style.css
 js/script.js
-README.md
+guide.js
 ```
 
-Статический HTML/CSS/JavaScript: npm и сборка не нужны. Навигация работает на всех страницах.
-Контактная форма учебная: проверяет поля локально, ничего не отправляет и не сохраняет.
+Это статический HTML/CSS/JavaScript-проект: npm и сборка не нужны. Навигация и контактная форма работают на всех страницах.
 
 ## Установка аналитики
 
 В исходном шаблоне Google Tag отсутствует — это часть практической работы.
-Получите код своего **учебного** веб-потока в GA4 и вставьте один экземпляр сразу после открывающего `<head>` в **каждый** из трёх HTML-файлов.
-Сохраните файлы, выполните Commit и Push, дождитесь нового Ready Deployment.
-Посетите Home, About, Contacts и проверьте реальные события в Realtime.
+Получите код своего учебного веб-потока в GA4 и вставьте один экземпляр сразу после открывающего `<head>` в каждый HTML-файл.
+После Commit и Push дождитесь завершения GitHub Actions, затем посетите Home, About и Contacts и проверьте реальные события в Realtime.
 
-Не меняйте рабочий поток ByteCamp. Не публикуйте секреты, пароли или личные данные.
-Measurement ID не является секретом; используйте только ID своего учебного потока.
+Не меняйте рабочий поток ByteCamp. Не публикуйте секреты, пароли или личные данные. Measurement ID не является секретом; используйте только ID своего учебного потока.
 
 ## UTM-проверка
 
-Подставьте собственный Production URL:
-
 ```text
-https://YOUR-PROJECT.vercel.app/?utm_source=telegram&utm_medium=social&utm_campaign=ga4_lab
+https://lastuser55556.github.io/ga4-analytics-lab/?utm_source=telegram&utm_medium=social&utm_campaign=ga4_lab
 ```
 
 Откройте ссылку в новой приватной сессии. Не принимайте новую вкладку за новую сессию GA4.
-
