@@ -1,6 +1,6 @@
 'use strict';
 
-const endpoint = 'https://script.google.com/macros/s/AKfycbxePC6uSncytGPxByBF0vixhEXCt1-EtbCFUqLIVkXXTGRue8F2NFjiIe_q434S9aOx/exec';
+const endpoint = 'https://script.google.com/macros/s/AKfycbxRPX6BJilO0Lg9sj2-cgk3pk06KFhArTpz8MaKzsxvKsbcd3ZPYbdBN-tDJvBpHoQQ/exec';
 const form = document.querySelector('#lead-form');
 
 if (form) {
